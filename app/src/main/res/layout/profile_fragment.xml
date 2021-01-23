@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragment.profile.ProfileFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:outlineProvider="none"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginBottom="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    tools:ignore="UselessParent">
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true">
+
+                        <FrameLayout
+                            android:id="@+id/frame_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_gravity="center"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="45dp">
+
+                                <ImageView
+                                    android:id="@+id/iv_avatar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:adjustViewBounds="true"
+                                    android:contentDescription="@string/avatar"
+                                    android:scaleType="centerCrop" />
+                            </androidx.cardview.widget.CardView>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="100dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="10dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_number_posts"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="45dp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:gravity="bottom|center_horizontal"
+                                        android:padding="5dp"
+                                        android:text="@string/_0"
+                                        android:textColor="@color/black"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="45dp"
+                                        android:layout_below="@+id/tv_number_posts"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="5dp"
+                                        android:gravity="center_horizontal"
+                                        android:text="@string/posts"
+                                        android:textColor="@color/black"
+                                        android:textSize="14sp" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="10dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_number_followers"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="45dp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:gravity="bottom|center_horizontal"
+                                        android:padding="5dp"
+                                        android:text="@string/_0"
+                                        android:textColor="@color/black"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="45dp"
+                                        android:layout_below="@+id/tv_number_followers"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="5dp"
+                                        android:gravity="center_horizontal"
+                                        android:text="@string/followers"
+                                        android:textColor="@color/black"
+                                        android:textSize="14sp" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="10dp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_number_following"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="45dp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:gravity="bottom|center_horizontal"
+                                        android:padding="5dp"
+                                        android:text="@string/_0"
+                                        android:textColor="@color/black"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="45dp"
+                                        android:layout_below="@+id/tv_number_following"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="5dp"
+                                        android:gravity="center_horizontal"
+                                        android:text="@string/following"
+                                        android:textColor="@color/black"
+                                        android:textSize="14sp" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+                        </FrameLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    tools:ignore="UselessParent">
+
+                    <Button
+                        android:id="@+id/bt_edit_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:text="@string/edit_profile"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    tools:ignore="UselessParent">
+
+                    <Button
+                        android:id="@+id/bt_log_out"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:text="@string/log_out"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textStyle="bold" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:layout_marginBottom="?attr/actionBarSize"
+                android:background="@color/white"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:layout_collapseMode="pin"
+                app:menu="@menu/menu_profile"
+                app:navigationIcon="@drawable/ic_baseline_keyboard_arrow_down_24"
+                app:popupTheme="@style/Theme.MaterialComponents.Light"
+                app:titleTextColor="@color/black" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tb_view"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:saveEnabled="true"
+                android:scrollbarDefaultDelayBeforeFade="1000"
+                android:scrollbarFadeDuration="1000"
+                android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge"
+                app:layout_collapseMode="pin"
+                app:tabIconTint="@color/gray"
+                app:tabIndicatorAnimationDuration="1000"
+                app:tabIndicatorColor="@color/black"
+                app:tabMode="fixed"
+                app:tabRippleColor="@color/white">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_outline_grid_on_24" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_baseline_person_24" />
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:fitsSystemWindows="true"
+        android:id="@+id/vp_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:isScrollContainer="true"
+        android:saveEnabled="true"
+        android:scrollbarFadeDuration="1000"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

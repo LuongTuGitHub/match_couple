@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "738828174639",
+    "project_id": "app-38a3d",
+    "storage_bucket": "app-38a3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738828174639:android:11780b80588076a91d4dda",
+        "android_client_info": {
+          "package_name": "com.java.tu.app.message"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738828174639-rth8h3ldn4e1dbahirk6semhu4b82c4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2shEEd96iFBYx1sDKpzF0jFqq4J9fo4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738828174639-rth8h3ldn4e1dbahirk6semhu4b82c4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
