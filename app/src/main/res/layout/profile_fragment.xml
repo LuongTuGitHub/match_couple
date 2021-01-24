@@ -320,17 +320,17 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="wrap_content"
-                    android:icon="@drawable/ic_baseline_person_24" />
+                    android:icon="@drawable/ic_baseline_perm_contact_calendar_24" />
             </com.google.android.material.tabs.TabLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:fitsSystemWindows="true"
         android:id="@+id/vp_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
+        android:fitsSystemWindows="true"
         android:isScrollContainer="true"
         android:saveEnabled="true"
         android:scrollbarFadeDuration="1000"

@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +27,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.java.tu.app.message.R;
 import com.java.tu.app.message.asset.Image;
+import com.java.tu.app.message.database.sqlite.AssetImage;
+
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.java.tu.app.message.asset.Const.AVATAR;
+import static com.java.tu.app.message.asset.Const.IMAGE;
+import static com.java.tu.app.message.asset.Const.KEY;
 import static com.java.tu.app.message.asset.Const.NAME;
 import static com.java.tu.app.message.asset.Const.PROFILE;
 
@@ -38,6 +49,7 @@ public class ViewImageActivity extends AppCompatActivity {
     private String image;
     private DatabaseReference refDb;
     private FirebaseUser fUser;
+    private StorageReference refStg;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_image)
@@ -103,6 +115,7 @@ public class ViewImageActivity extends AppCompatActivity {
     private void Init() {
         refDb = FirebaseDatabase.getInstance().getReference();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
+        refStg = FirebaseStorage.getInstance().getReference();
     }
 
     private void select() {
@@ -119,6 +132,56 @@ public class ViewImageActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+            }
+        });
+        view.findViewById(R.id.bt_delete_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refDb.child(PROFILE).child(fUser.getEmail().hashCode() + "").child(AVATAR).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+                            String avatar = snapshot.getValue(String.class);
+                            if (avatar != null) {
+                                if (avatar.length() > 0) {
+                                    if (avatar.equals(image)) {
+                                        refDb.child(PROFILE).child(fUser.getEmail().hashCode() + "").child(AVATAR).removeValue();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                refStg.child(IMAGE).child(image + KEY).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ViewImageActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                });
+                refDb.child(IMAGE).child(fUser.getEmail().hashCode() + "").child(image).removeValue();
+                new AssetImage(ViewImageActivity.this).delete(image);
+            }
+        });
+        view.findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BitmapDrawable drawable = ((BitmapDrawable) iv_image.getDrawable());
+                if (drawable != null) {
+                    Bitmap bitmap = drawable.getBitmap();
+                    if (bitmap != null) {
+                        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, UUID.randomUUID().toString() + KEY, null);
+                        Toast.makeText(ViewImageActivity.this, "Success !", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }
             }
         });
         //TODO

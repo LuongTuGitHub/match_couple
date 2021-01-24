@@ -119,13 +119,18 @@ public class ChatFragment extends Fragment implements OnClickItemRecyclerView {
                 }
             });
             refDb.child(PROFILE).child(fUser.getEmail().hashCode() + "").child(AVATAR).addValueEventListener(new ValueEventListener() {
+                @SuppressLint("UseCompatLoadingForDrawables")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
                         String key = snapshot.getValue(String.class);
                         if (key != null) {
                             new Image(requireContext()).getImage(iv_avatar, key, Long.MAX_VALUE);
+                        } else {
+                            iv_avatar.setImageDrawable(requireContext().getResources().getDrawable(R.color.white));
                         }
+                    } else {
+                        iv_avatar.setImageDrawable(requireContext().getResources().getDrawable(R.color.white));
                     }
                 }
 

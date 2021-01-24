@@ -173,6 +173,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         refDb = FirebaseDatabase.getInstance().getReference();
         userListener = new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
@@ -184,7 +185,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         if (profile.getAvatar() != null) {
                             if (profile.getAvatar().length() > 0) {
                                 new Image(requireContext()).getImage(iv_avatar, profile.getAvatar(), Long.MAX_VALUE);
+                            } else {
+                                iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                             }
+                        } else {
+                            iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                         }
                     }
                 }
@@ -238,6 +243,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         dialog.setContentView(bottom_view);
         ((TextView) bottom_view.findViewById(R.id.tv_email)).setText(fUser.getEmail());
         refDb.child(PROFILE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
@@ -251,7 +257,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         if (profile.getAvatar() != null) {
                             if (profile.getAvatar().length() > 0) {
                                 new Image(requireContext()).getImage(bottom_view.findViewById(R.id.iv_avatar), profile.getAvatar(), Long.MAX_VALUE);
+                            } else {
+                                ((ImageView) bottom_view.findViewById(R.id.iv_avatar)).setImageDrawable(getResources().getDrawable(R.color.white));
                             }
+                        } else {
+                            ((ImageView) bottom_view.findViewById(R.id.iv_avatar)).setImageDrawable(getResources().getDrawable(R.color.white));
                         }
                     }
                 }

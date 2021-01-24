@@ -10,7 +10,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="1dp"
-        android:background="@color/blue"
+        android:background="@drawable/border_text_message_view"
+        android:backgroundTint="@color/blue"
         android:maxWidth="200dp"
         android:padding="10dp"
         android:textColor="@color/white" />

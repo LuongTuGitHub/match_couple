@@ -33,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +49,7 @@ public class GridImageFragment extends Fragment {
     private final DatabaseReference refDb;
     private final FirebaseUser fUser;
     private GridImageAdapter adapter;
-    private final ArrayList<String> data;
+    private final Vector<String> data;
     private ChildEventListener imageListener;
 
     @SuppressLint("NonConstantResourceId")
@@ -64,7 +65,7 @@ public class GridImageFragment extends Fragment {
     public GridImageFragment() {
         refDb = FirebaseDatabase.getInstance().getReference();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-        data = new ArrayList<>();
+        data = new Vector<>();
     }
 
 
@@ -87,10 +88,17 @@ public class GridImageFragment extends Fragment {
             if (adapter == null) {
                 adapter = new GridImageAdapter(data, requireContext());
                 Init();
-                rv_image.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
+                rv_image.setLayoutManager(new GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false));
+                rv_image.setHasFixedSize(true);
                 rv_image.setAdapter(adapter);
                 refDb.child(IMAGE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addChildEventListener(imageListener);
             }
+            rv_image.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                }
+            });
         }
         return view;
     }
@@ -110,8 +118,8 @@ public class GridImageFragment extends Fragment {
                     if (path != null) {
                         rv_image.setVisibility(View.VISIBLE);
                         layout.setVisibility(View.GONE);
-                        data.add(path);
-                        adapter.notifyItemInserted(data.size() - 1);
+                        data.insertElementAt(path, 0);
+                        adapter.notifyItemInserted(0);
                     }
                 }
             }
@@ -124,13 +132,16 @@ public class GridImageFragment extends Fragment {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
-                    String path = snapshot.getValue(String.class);
+                    String path = snapshot.getKey();
                     if (path != null) {
                         if (data != null) {
-                            for (String image : data) {
-                                if (image.equals(path)) {
-                                    data.remove(image);
-                                    adapter.notifyItemRemoved(data.indexOf(image));
+                            for (int i = 0; i < data.size(); i++) {
+                                if (data.get(i).equals(path)) {
+                                    data.removeElementAt(i);
+                                    adapter.notifyItemRemoved(i);
+                                    if (data.size() == 0) {
+                                        layout.setVisibility(View.VISIBLE);
+                                    }
                                     break;
                                 }
                             }
@@ -154,7 +165,7 @@ public class GridImageFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        refDb.child(IMAGE).child(fUser.getEmail().hashCode() + "").removeEventListener(imageListener);
+        refDb.child(IMAGE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").removeEventListener(imageListener);
         refDb.onDisconnect();
     }
 

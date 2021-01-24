@@ -135,6 +135,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         refDb = FirebaseDatabase.getInstance().getReference();
         refStg = FirebaseStorage.getInstance().getReference();
         userListener = new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
@@ -146,9 +147,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         if (profile.getAvatar() != null) {
                             if (profile.getAvatar().length() > 0) {
                                 new Image(EditProfileActivity.this).getImage(iv_avatar, profile.getAvatar(), Long.MAX_VALUE);
+                            } else {
+                                iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                             }
+                        } else {
+                            iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                         }
                     }
+                } else {
+                    iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                 }
             }
 

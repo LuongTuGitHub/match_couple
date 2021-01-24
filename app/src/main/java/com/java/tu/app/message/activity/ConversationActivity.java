@@ -118,6 +118,7 @@ public class ConversationActivity extends AppCompatActivity {
         });
         if (type == Const.Conversation.NORMAl) {
             refDb.child(PROFILE).child(fUser.getEmail().hashCode() + "").addValueEventListener(new ValueEventListener() {
+                @SuppressLint("UseCompatLoadingForDrawables")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
@@ -129,9 +130,15 @@ public class ConversationActivity extends AppCompatActivity {
                             if (profile.getAvatar() != null) {
                                 if (profile.getAvatar().length() > 0) {
                                     new Image(ConversationActivity.this).getImage(iv_avatar, profile.getAvatar(), Long.MAX_VALUE);
+                                } else {
+                                    iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                                 }
+                            } else {
+                                iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                             }
                         }
+                    } else {
+                        iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                     }
                 }
 
@@ -165,6 +172,7 @@ public class ConversationActivity extends AppCompatActivity {
             String email = getIntent().getStringExtra("email");
             if (email != null) {
                 refDb.child(PROFILE).child(email.hashCode() + "").addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("UseCompatLoadingForDrawables")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue() != null) {
@@ -176,9 +184,17 @@ public class ConversationActivity extends AppCompatActivity {
                                 if (profile.getAvatar() != null) {
                                     if (profile.getAvatar().length() > 0) {
                                         new Image(ConversationActivity.this).getImage(iv_avatar, profile.getAvatar(), Long.MAX_VALUE);
+                                    } else {
+                                        iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                                     }
+                                } else {
+                                    iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                                 }
+                            } else {
+                                iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                             }
+                        } else {
+                            iv_avatar.setImageDrawable(getResources().getDrawable(R.color.white));
                         }
                     }
 
@@ -211,7 +227,7 @@ public class ConversationActivity extends AppCompatActivity {
         }
         if (type == Const.Conversation.GROUP) {
             String email = getIntent().getStringExtra("email");
-
+            new Image(ConversationActivity.this).getImage(iv_avatar, key, Long.MAX_VALUE);
             refDb.child(CONVERSATION).child(key).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -344,7 +360,7 @@ public class ConversationActivity extends AppCompatActivity {
                     if (message != null) {
                         messages.add(message);
                         messageAdapter.notifyItemInserted(messages.size() - 1);
-                        if(!(rv_message.getScrollState()==RecyclerView.SCROLL_INDICATOR_TOP)){
+                        if (!(rv_message.getScrollState() == RecyclerView.SCROLL_INDICATOR_TOP)) {
                             rv_message.scrollToPosition(messages.size() - 1);
                         }
                     }

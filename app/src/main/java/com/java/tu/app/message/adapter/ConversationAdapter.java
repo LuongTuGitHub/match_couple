@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -80,6 +81,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                         if (conversation_object != null) {
                             if (conversation_object.getType() == Const.Conversation.NORMAl) {
                                 refDb.child(PROFILE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addValueEventListener(new ValueEventListener() {
+                                    @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables"})
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if (snapshot.getValue() != null) {
@@ -91,9 +93,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                                                 if (profile.getAvatar() != null) {
                                                     if (profile.getAvatar().length() > 0) {
                                                         new Image(context).getImage(holder.itemView.findViewById(R.id.iv_avatar), profile.getAvatar(), Long.MAX_VALUE);
+                                                    } else {
+                                                        ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                                     }
+                                                } else {
+                                                    ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                                 }
+                                            } else {
+                                                ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                             }
+                                        } else {
+                                            ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                         }
                                     }
 
@@ -105,9 +115,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                                 intent.putExtra("type", Const.Conversation.NORMAl);
                             }
                             if (conversation_object.getType() == Const.Conversation.COUPLE) {
+                                new Image(context).getImage(holder.itemView.findViewById(R.id.iv_avatar), conversation, Long.MAX_VALUE);
                                 for (String email : conversation_object.getPersons()) {
                                     if (!email.equals(fUser.getEmail())) {
                                         refDb.child(PROFILE).child(email.hashCode() + "").addValueEventListener(new ValueEventListener() {
+                                            @SuppressLint({"UseCompatLoadingForDrawables", "ResourceType"})
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 if (snapshot.getValue() != null) {
@@ -119,9 +131,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                                                         if (profile.getAvatar() != null) {
                                                             if (profile.getAvatar().length() > 0) {
                                                                 new Image(context).getImage(holder.itemView.findViewById(R.id.iv_avatar), profile.getAvatar(), Long.MAX_VALUE);
+                                                            } else {
+                                                                ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                                             }
+                                                        } else {
+                                                            ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                                         }
+                                                    } else {
+                                                        ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                                     }
+                                                } else {
+                                                    ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                                                 }
                                             }
 

@@ -28,5 +28,33 @@
             android:text="@string/apply_avatar"
             android:textAllCaps="false"
             android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/bt_delete_image"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_baseline_delete_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/delete_image"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/bt_save"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_baseline_cloud_download_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/save_image"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
     </LinearLayout>
 </RelativeLayout>

@@ -80,4 +80,10 @@ public class AssetImage extends SQLiteOpenHelper {
         }
         return bytes;
     }
+
+    public void delete(@NotNull String key) {
+        String write_delete = "DELETE FROM IMAGE WHERE UUID LIKE ?";
+        SQLiteDatabase write = getWritableDatabase();
+        write.execSQL(write_delete, new String[]{key});
+    }
 }

@@ -1,10 +1,12 @@
 package com.java.tu.app.message.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,6 +86,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonHolder> {
             }
         });
         refDb.child(PROFILE).child(emails.get(position).hashCode() + "").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
@@ -93,8 +96,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonHolder> {
                         if (avatar != null) {
                             if (avatar.length() > 0) {
                                 new Image(context).getImage(holder.itemView.findViewById(R.id.iv_avatar), avatar, Long.MAX_VALUE);
+                            } else {
+                                ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                             }
+                        } else {
+                            ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                         }
+                    } else {
+                        ((ImageView) holder.itemView.findViewById(R.id.iv_avatar)).setImageDrawable(context.getResources().getDrawable(R.color.white));
                     }
                 }
             }

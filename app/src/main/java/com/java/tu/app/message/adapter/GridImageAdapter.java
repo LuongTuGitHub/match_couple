@@ -17,13 +17,14 @@ import com.java.tu.app.message.asset.Image;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class GridImageAdapter extends RecyclerView.Adapter<GridImageHolder> {
 
-    private final ArrayList<String> data;
+    private final Vector<String> data;
     private final Context context;
 
-    public GridImageAdapter(ArrayList<String> data, @NotNull Context context) {
+    public GridImageAdapter(Vector<String> data, @NotNull Context context) {
         this.data = data;
         this.context = context;
     }
@@ -37,12 +38,13 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull GridImageHolder holder, int position) {
-        new Image(holder.itemView.getContext()).getImage(holder.itemView.findViewById(R.id.iv_image), data.get(position), Long.MAX_VALUE);
+        String key = data.get(position);
+        new Image(holder.itemView.getContext()).getImage(holder.itemView.findViewById(R.id.iv_image), key, Long.MAX_VALUE);
         holder.itemView.findViewById(R.id.layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ViewImageActivity.class);
-                intent.putExtra("image", data.get(position));
+                intent.putExtra("image", key);
                 context.startActivity(intent);
             }
         });

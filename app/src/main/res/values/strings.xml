@@ -56,4 +56,6 @@
     <string name="message">Message</string>
     <string name="please_send_first_message">Please! Send First Message</string>
     <string name="apply_avatar">Apply Avatar</string>
+    <string name="delete_image">Delete Image</string>
+    <string name="save_image">Save Image</string>
 </resources>
