@@ -3,6 +3,8 @@ package com.java.tu.app.message.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -264,6 +266,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                             }
                             Message message = conversation_object.getMessage();
                             if (message != null) {
+                                // TODO
                                 if (conversation_object.getType() == Const.Conversation.NORMAl) {
                                     if (message.getType() == Const.Message.HIDE_TEXT || message.getType() == Const.Message.TEXT) {
                                         ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setText(message.getBody());
@@ -283,6 +286,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                                     }
                                 }
                                 //TODO
+                            } else {
+                                ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setTextColor(context.getResources().getColor(R.color.gray));
+                                ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setTypeface(Typeface.DEFAULT);
+                                ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setText(R.string.please_send_first_message);
                             }
                         }
                     }

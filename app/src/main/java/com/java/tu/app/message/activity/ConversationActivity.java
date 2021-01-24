@@ -1,34 +1,48 @@
 package com.java.tu.app.message.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
+import com.java.tu.app.message.adapter.MessageAdapter;
 import com.java.tu.app.message.asset.Const;
 import com.java.tu.app.message.asset.Image;
 import com.java.tu.app.message.object.Conversation;
+import com.java.tu.app.message.object.Message;
 import com.java.tu.app.message.object.Profile;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.java.tu.app.message.asset.Const.CONVERSATION;
+import static com.java.tu.app.message.asset.Const.MESSAGE;
 import static com.java.tu.app.message.asset.Const.OFFLINE;
 import static com.java.tu.app.message.asset.Const.ONLINE;
 import static com.java.tu.app.message.asset.Const.PROFILE;
@@ -38,6 +52,10 @@ public class ConversationActivity extends AppCompatActivity {
 
     private FirebaseUser fUser;
     private DatabaseReference refDb;
+    private ArrayList<Message> messages;
+    private String key;
+    private MessageAdapter messageAdapter;
+    private int type;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.toolbar)
@@ -45,15 +63,52 @@ public class ConversationActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_avatar)
     ImageView iv_avatar;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_message)
+    EditText edt_message;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bt_send)
+    Button bt_send;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_message)
+    RecyclerView rv_message;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
-        String key = getIntent().getStringExtra("key");
-        int type = getIntent().getIntExtra("type", -1);
+        key = getIntent().getStringExtra("key");
+        type = getIntent().getIntExtra("type", -1);
         Init();
+        LinearLayoutManager manager = new LinearLayoutManager(ConversationActivity.this, RecyclerView.VERTICAL, false);
+        manager.setStackFromEnd(true);
+        rv_message.setLayoutManager(manager);
+        rv_message.setAdapter(messageAdapter);
+        rv_message.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //TODO
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //TODO
+            }
+        });
+        bt_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String body = edt_message.getText().toString().trim();
+                if (body.length() > 0) {
+                    add(body, Const.Message.TEXT);
+                    edt_message.setText("");
+                }
+            }
+        });
         refDb.child(STATUS).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").setValue(ONLINE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,7 +336,63 @@ public class ConversationActivity extends AppCompatActivity {
                 });
             }
         }
+        refDb.child(MESSAGE).child(key).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.getValue() != null) {
+                    Message message = snapshot.getValue(Message.class);
+                    if (message != null) {
+                        messages.add(message);
+                        messageAdapter.notifyItemInserted(messages.size() - 1);
+                        if(!(rv_message.getScrollState()==RecyclerView.SCROLL_INDICATOR_TOP)){
+                            rv_message.scrollToPosition(messages.size() - 1);
+                        }
+                    }
+                }
+            }
 
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.getValue() != null) {
+                    Message message = snapshot.getValue(Message.class);
+                    if (message != null) {
+                        for (int i = 0; i < messages.size(); i++) {
+                            if (messages.get(i).getKey().equals(message.getKey())) {
+                                messages.set(i, message);
+                                messageAdapter.notifyItemChanged(i);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() != null) {
+                    Message message = snapshot.getValue(Message.class);
+                    if (message != null) {
+                        for (int i = 0; i < messages.size(); i++) {
+                            if (messages.get(i).getKey().equals(message.getKey())) {
+                                messages.remove(i);
+                                messageAdapter.notifyItemRemoved(i);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //TODO
     }
@@ -307,6 +418,28 @@ public class ConversationActivity extends AppCompatActivity {
     private void Init() {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         refDb = FirebaseDatabase.getInstance().getReference();
+        messages = new ArrayList<>();
+        messageAdapter = new MessageAdapter(ConversationActivity.this, type, messages);
     }
 
+    private void add(@NotNull String body, int type) {
+        Calendar calendar = Calendar.getInstance();
+        int minute = calendar.getTime().getMinutes();
+        int hour = calendar.getTime().getHours();
+        int day = calendar.getTime().getDay();
+        int month = calendar.getTime().getMonth();
+        int year = calendar.getTime().getYear();
+        String from = fUser.getEmail();
+        String key_message = calendar.getTimeInMillis() + "" + Objects.requireNonNull(from).hashCode();
+        Message message = new Message(minute, hour, day, month, year, from, key_message, body, type, calendar.getTimeInMillis());
+
+        refDb.child(MESSAGE).child(key).child(key_message).setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    refDb.child(CONVERSATION).child(key).child(MESSAGE).setValue(message);
+                }
+            }
+        });
+    }
 }

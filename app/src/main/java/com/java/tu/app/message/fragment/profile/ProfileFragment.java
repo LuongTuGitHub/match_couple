@@ -231,12 +231,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onStop();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        refDb.onDisconnect();
-    }
-
     private void Account() {
         @SuppressLint("InflateParams") View bottom_view = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_account_view, null);
         BottomSheetDialog dialog = new BottomSheetDialog(requireContext());

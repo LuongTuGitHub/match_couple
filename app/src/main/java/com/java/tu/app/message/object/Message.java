@@ -1,7 +1,7 @@
 package com.java.tu.app.message.object;
 
 public class Message {
-    private int minute, hour, day, year;
+    private int minute, hour, day, month, year;
     private String form;
     private String key;
     private String body;
@@ -11,11 +11,11 @@ public class Message {
     public Message() {
     }
 
-
-    public Message(int minute, int hour, int day, int year, String form, String key, String body, int type, long time) {
+    public Message(int minute, int hour, int day, int month, int year, String form, String key, String body, int type, long time) {
         this.minute = minute;
         this.hour = hour;
         this.day = day;
+        this.month = month;
         this.year = year;
         this.form = form;
         this.key = key;
@@ -46,6 +46,14 @@ public class Message {
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     public int getYear() {
