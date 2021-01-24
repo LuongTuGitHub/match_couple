@@ -147,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fUser = fAuth.getCurrentUser();
         refShared = getSharedPreferences(SESSION, MODE_PRIVATE);
-        adapter = new HomePagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.POSITION_UNCHANGED);
+        adapter = new HomePagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         sessionChange = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

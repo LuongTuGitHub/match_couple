@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
         if (adapter == null) {
-            adapter = new ProfileViewPagerAdapter(requireActivity().getSupportFragmentManager(), FragmentPagerAdapter.POSITION_UNCHANGED);
+            adapter = new ProfileViewPagerAdapter(requireActivity().getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, requireContext());
             vp_view.setAdapter(adapter);
         }
         tb_view.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

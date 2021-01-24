@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.java.tu.app.message.R;
 import com.java.tu.app.message.adapter.GridImageAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -65,6 +67,7 @@ public class GridImageFragment extends Fragment {
         data = new ArrayList<>();
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -82,7 +85,7 @@ public class GridImageFragment extends Fragment {
                 }
             }, TIME_SLASH);
             if (adapter == null) {
-                adapter = new GridImageAdapter(data);
+                adapter = new GridImageAdapter(data, requireContext());
                 Init();
                 rv_image.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
                 rv_image.setAdapter(adapter);
