@@ -19,13 +19,12 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageHolder> {
 
     public GridImageAdapter(ArrayList<String> data) {
         this.data = data;
-        setHasStableIds(true);
     }
 
     @NonNull
     @Override
     public GridImageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_view, parent);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_view, parent, false);
         return new GridImageHolder(view);
     }
 

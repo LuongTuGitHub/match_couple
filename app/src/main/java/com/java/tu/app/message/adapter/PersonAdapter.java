@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.activity.conversation.ConversationActivity;
-import com.java.tu.app.message.adapter.holder.ConversationHolder;
+import com.java.tu.app.message.activity.ConversationActivity;
 import com.java.tu.app.message.adapter.holder.PersonHolder;
 import com.java.tu.app.message.asset.Const;
 import com.java.tu.app.message.asset.Image;

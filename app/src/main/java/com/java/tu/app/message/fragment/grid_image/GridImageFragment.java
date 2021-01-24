@@ -25,6 +25,7 @@ import com.java.tu.app.message.R;
 import com.java.tu.app.message.adapter.GridImageAdapter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +67,7 @@ public class GridImageFragment extends Fragment {
                 Init();
                 rv_image.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
                 rv_image.setAdapter(adapter);
-                refDb.child(IMAGE + "/" + fUser.getEmail().hashCode() + "").addChildEventListener(imageListener);
+                refDb.child(IMAGE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addChildEventListener(imageListener);
             }
         }
         return view;

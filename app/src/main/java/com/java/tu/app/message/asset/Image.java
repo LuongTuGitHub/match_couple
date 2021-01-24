@@ -29,10 +29,10 @@ public class Image {
         this.asset = new AssetImage(context);
     }
 
-    public void getImage(@NotNull ImageView image, @Nullable String target, long value) {
+    public void getImage(@NotNull ImageView image, @NotNull String target, long value) {
         if (asset.checkExist(target)) {
             byte[] bytes = asset.getImage(target);
-            if(bytes!=null){
+            if (bytes != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 image.setImageBitmap(bitmap);
             }

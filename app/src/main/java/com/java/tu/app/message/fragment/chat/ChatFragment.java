@@ -30,6 +30,7 @@ import com.java.tu.app.message.R;
 import com.java.tu.app.message.adapter.ConversationAdapter;
 import com.java.tu.app.message.adapter.PersonAdapter;
 import com.java.tu.app.message.adapter.event.OnClickItemRecyclerView;
+import com.java.tu.app.message.asset.Image;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -37,10 +38,12 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.java.tu.app.message.asset.Const.AVATAR;
 import static com.java.tu.app.message.asset.Const.CHAT;
 import static com.java.tu.app.message.asset.Const.CONVERSATION;
 import static com.java.tu.app.message.asset.Const.OFFLINE;
 import static com.java.tu.app.message.asset.Const.ONLINE;
+import static com.java.tu.app.message.asset.Const.PROFILE;
 import static com.java.tu.app.message.asset.Const.STATUS;
 
 public class ChatFragment extends Fragment implements OnClickItemRecyclerView {
@@ -115,6 +118,22 @@ public class ChatFragment extends Fragment implements OnClickItemRecyclerView {
 
                 }
             });
+            refDb.child(PROFILE).child(fUser.getEmail().hashCode() + "").child(AVATAR).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null) {
+                        String key = snapshot.getValue(String.class);
+                        if (key != null) {
+                            new Image(requireContext()).getImage(iv_avatar, key, Long.MAX_VALUE);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             refDb.child(CHAT).child(fUser.getEmail().hashCode() + "").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -127,7 +146,7 @@ public class ChatFragment extends Fragment implements OnClickItemRecyclerView {
                             }
                             conversation.add(key);
                             conversationAdapter.setConversions(conversation);
-                            conversationAdapter.notifyItemInserted(conversation.size()-1);
+                            conversationAdapter.notifyItemInserted(conversation.size() - 1);
                         }
                     }
                 }

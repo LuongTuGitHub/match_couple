@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.activity.conversation.ConversationActivity;
+import com.java.tu.app.message.activity.ConversationActivity;
 import com.java.tu.app.message.adapter.event.OnClickItemRecyclerView;
 import com.java.tu.app.message.adapter.holder.ConversationHolder;
 import com.java.tu.app.message.asset.Const;
@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 import static com.java.tu.app.message.asset.Const.CONVERSATION;
 import static com.java.tu.app.message.asset.Const.ONLINE;
@@ -76,7 +77,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                         Conversation conversation_object = snapshot.getValue(Conversation.class);
                         if (conversation_object != null) {
                             if (conversation_object.getType() == Const.Conversation.NORMAl) {
-                                refDb.child(PROFILE).child(fUser.getEmail().hashCode() + "").addValueEventListener(new ValueEventListener() {
+                                refDb.child(PROFILE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         if (snapshot.getValue() != null) {
@@ -158,7 +159,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                                 StringBuilder name_conversation = new StringBuilder();
                                 if (conversation_object.getName() != null) {
                                     if (conversation_object.getName().length() > 0) {
-                                        ((TextView) holder.itemView.findViewById(R.id.tv_name)).setText(conversation_object.getName());
+                                        if (conversation_object.getName().length() > 0) {
+                                            if (conversation_object.getName().length() > 9) {
+                                                ((TextView) holder.itemView.findViewById(R.id.tv_name)).setText(conversation_object.getName().substring(0, 9));
+                                            } else {
+                                                ((TextView) holder.itemView.findViewById(R.id.tv_name)).setText(conversation_object.getName());
+                                            }
+                                        }
                                     } else {
                                         for (int i = 0; i < person.length; i++) {
                                             int finalI = i;
@@ -255,28 +262,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
                                 intent.putExtra("email", conversation_object.getUser_create());
                                 intent.putExtra("type", Const.Conversation.GROUP);
                             }
-                        }
-                        Message message = conversation_object.getMessage();
-                        if (message != null) {
-                            if (conversation_object.getType() == Const.Conversation.NORMAl) {
-                                if (message.getType() == Const.Message.HIDE_TEXT || message.getType() == Const.Message.TEXT) {
-                                    ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setText(message.getBody());
-                                    //TODO
-                                }
-                            }
-                            if (conversation_object.getType() == Const.Conversation.GROUP || conversation_object.getType() == Const.Conversation.COUPLE) {
-                                if (message.getType() == Const.Message.HIDE_TEXT || message.getType() == Const.Message.TEXT) {
-                                    String body = message.getBody();
-                                    if (message.getForm().equals(fUser.getEmail())) {
-                                        body = "You:" + body;
+                            Message message = conversation_object.getMessage();
+                            if (message != null) {
+                                if (conversation_object.getType() == Const.Conversation.NORMAl) {
+                                    if (message.getType() == Const.Message.HIDE_TEXT || message.getType() == Const.Message.TEXT) {
+                                        ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setText(message.getBody());
+                                        //TODO
                                     }
-                                    if ((Calendar.getInstance().getTimeInMillis() - message.getTime()) > 12 * 60 * 60) {
-                                        body += (message.getHour() + ":" + message.getMinute());
-                                    }
-                                    ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setText(body);
                                 }
+                                if (conversation_object.getType() == Const.Conversation.GROUP || conversation_object.getType() == Const.Conversation.COUPLE) {
+                                    if (message.getType() == Const.Message.HIDE_TEXT || message.getType() == Const.Message.TEXT) {
+                                        String body = message.getBody();
+                                        if (message.getForm().equals(fUser.getEmail())) {
+                                            body = "You:" + body;
+                                        }
+                                        if ((Calendar.getInstance().getTimeInMillis() - message.getTime()) > 12 * 60 * 60) {
+                                            body += (message.getHour() + ":" + message.getMinute());
+                                        }
+                                        ((TextView) holder.itemView.findViewById(R.id.tv_chat)).setText(body);
+                                    }
+                                }
+                                //TODO
                             }
-                            //TODO
                         }
                     }
                 }

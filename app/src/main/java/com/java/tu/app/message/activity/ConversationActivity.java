@@ -1,4 +1,4 @@
-package com.java.tu.app.message.activity.conversation;
+package com.java.tu.app.message.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,10 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,8 +38,6 @@ public class ConversationActivity extends AppCompatActivity {
 
     private FirebaseUser fUser;
     private DatabaseReference refDb;
-    private int type;
-    private String key;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.toolbar)
@@ -55,8 +51,8 @@ public class ConversationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
-        key = getIntent().getStringExtra("key");
-        type = getIntent().getIntExtra("type", -1);
+        String key = getIntent().getStringExtra("key");
+        int type = getIntent().getIntExtra("type", -1);
         Init();
         refDb.child(STATUS).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").setValue(ONLINE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -169,53 +165,15 @@ public class ConversationActivity extends AppCompatActivity {
                         if (conversation != null) {
                             if (conversation.getName() != null) {
                                 if (conversation.getName().length() > 0) {
-                                    toolbar.setTitle(conversation.getName());
+                                    if (conversation.getName().length() > 9) {
+                                        toolbar.setTitle(conversation.getName().substring(0, 9));
+                                    } else {
+                                        toolbar.setTitle(conversation.getName());
+                                    }
                                 } else {
                                     ArrayList<String> person = conversation.getPersons();
                                     String[] name_person = new String[person.size()];
                                     StringBuilder name_conversation = new StringBuilder();
-                                    if (person != null) {
-                                        for (int i = 0; i < person.size(); i++) {
-                                            int finalI = i;
-                                            refDb.child(PROFILE).child(person.get(i).hashCode() + "").addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    if (snapshot.getValue() != null) {
-                                                        Profile profile = snapshot.getValue(Profile.class);
-                                                        if (profile != null) {
-                                                            if (profile.getName() != null) {
-                                                                name_person[finalI] = profile.getName();
-                                                                for (String name : name_person) {
-                                                                    if (name != null) {
-                                                                        name_conversation.append(profile.getName()).append(" ");
-                                                                    }
-                                                                }
-                                                                String name = name_conversation.toString();
-                                                                if (name.length() > 0) {
-                                                                    if (name.length() > 9) {
-                                                                        toolbar.setTitle(name.substring(0, 9));
-                                                                    } else {
-                                                                        toolbar.setTitle(name);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
-                                        }
-                                    }
-                                }
-                            } else {
-                                ArrayList<String> person = conversation.getPersons();
-                                String[] name_person = new String[person.size()];
-                                StringBuilder name_conversation = new StringBuilder();
-                                if (person != null) {
                                     for (int i = 0; i < person.size(); i++) {
                                         int finalI = i;
                                         refDb.child(PROFILE).child(person.get(i).hashCode() + "").addValueEventListener(new ValueEventListener() {
@@ -250,6 +208,44 @@ public class ConversationActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
+                                }
+                            } else {
+                                ArrayList<String> person = conversation.getPersons();
+                                String[] name_person = new String[person.size()];
+                                StringBuilder name_conversation = new StringBuilder();
+                                for (int i = 0; i < person.size(); i++) {
+                                    int finalI = i;
+                                    refDb.child(PROFILE).child(person.get(i).hashCode() + "").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.getValue() != null) {
+                                                Profile profile = snapshot.getValue(Profile.class);
+                                                if (profile != null) {
+                                                    if (profile.getName() != null) {
+                                                        name_person[finalI] = profile.getName();
+                                                        for (String name : name_person) {
+                                                            if (name != null) {
+                                                                name_conversation.append(profile.getName()).append(" ");
+                                                            }
+                                                        }
+                                                        String name = name_conversation.toString();
+                                                        if (name.length() > 0) {
+                                                            if (name.length() > 9) {
+                                                                toolbar.setTitle(name.substring(0, 9));
+                                                            } else {
+                                                                toolbar.setTitle(name);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                                 }
                             }
 

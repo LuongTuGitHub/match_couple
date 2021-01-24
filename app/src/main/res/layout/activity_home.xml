@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge"
-    tools:context=".activity.home.HomeActivity">
+    tools:context=".activity.HomeActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_home"

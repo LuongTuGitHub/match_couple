@@ -1,4 +1,4 @@
-package com.java.tu.app.message.activity.home;
+package com.java.tu.app.message.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,18 +29,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.activity.login.LoginActivity;
 import com.java.tu.app.message.adapter.HomePagerAdapter;
-import com.java.tu.app.message.asset.Const;
-import com.java.tu.app.message.object.Conversation;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.java.tu.app.message.asset.Const.CHAT;
-import static com.java.tu.app.message.asset.Const.CONVERSATION;
 import static com.java.tu.app.message.asset.Const.OFFLINE;
 import static com.java.tu.app.message.asset.Const.ONLINE;
 import static com.java.tu.app.message.asset.Const.SESSION;

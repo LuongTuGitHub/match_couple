@@ -1,4 +1,4 @@
-package com.java.tu.app.message.activity.start_app;
+package com.java.tu.app.message.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.activity.Router;
-import com.java.tu.app.message.activity.login.LoginActivity;
 
 import static com.java.tu.app.message.asset.Const.TIME_SLASH;
 

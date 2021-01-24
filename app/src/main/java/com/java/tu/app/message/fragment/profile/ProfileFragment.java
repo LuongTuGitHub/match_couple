@@ -4,17 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,8 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.activity.edit_profile.EditProfileActivity;
-import com.java.tu.app.message.activity.login.LoginActivity;
+import com.java.tu.app.message.activity.EditProfileActivity;
+import com.java.tu.app.message.activity.LoginActivity;
 import com.java.tu.app.message.adapter.ProfileViewPagerAdapter;
 import com.java.tu.app.message.asset.Image;
 import com.java.tu.app.message.object.Profile;
@@ -48,7 +44,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.java.tu.app.message.asset.Const.PROFILE;
-import static com.java.tu.app.message.asset.Const.TIME_SLASH;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 

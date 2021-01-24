@@ -1,15 +1,13 @@
-package com.java.tu.app.message.activity.login;
+package com.java.tu.app.message.activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -24,8 +22,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.activity.Router;
-import com.java.tu.app.message.activity.sign_up.SignUpActivity;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -31,7 +31,7 @@ public class AssetImage extends SQLiteOpenHelper {
     public boolean checkExist(@NotNull String key) {
         SQLiteDatabase database = getReadableDatabase();
         @SuppressLint("Recycle") Cursor cursor = database.rawQuery("SELECT UUID FROM IMAGE WHERE UUID LIKE ?", new String[]{key});
-        if(cursor==null){
+        if (cursor == null) {
             database.close();
             return false;
         }
@@ -47,13 +47,20 @@ public class AssetImage extends SQLiteOpenHelper {
     }
 
     public void add(@NotNull String key, @NotNull byte[] bytes) {
-        String sql = "INSERT INTO IMAGE VALUES(null,?,?)";
-        SQLiteStatement statement = getWritableDatabase().compileStatement(sql);
-        statement.clearBindings();
-        statement.bindString(1, key);
-        statement.bindBlob(2, bytes);
-        statement.executeInsert();
-        statement.close();
+        if (!checkExist(key)) {
+            String sql = "INSERT INTO IMAGE VALUES(null,?,?)";
+            SQLiteStatement statement = getWritableDatabase().compileStatement(sql);
+            statement.clearBindings();
+            statement.bindString(1, key);
+            statement.bindBlob(2, bytes);
+            statement.executeInsert();
+            statement.close();
+        } else {
+            String write_delete = "DELETE FROM IMAGE WHERE UUID LIKE ?";
+            SQLiteDatabase write = getWritableDatabase();
+            write.execSQL(write_delete, new String[]{key});
+            add(key, bytes);
+        }
     }
 
     public byte[] getImage(String key) {
