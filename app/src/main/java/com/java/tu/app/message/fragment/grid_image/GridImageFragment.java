@@ -1,10 +1,15 @@
 package com.java.tu.app.message.fragment.grid_image;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -31,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.java.tu.app.message.asset.Const.IMAGE;
+import static com.java.tu.app.message.asset.Const.TIME_SLASH;
 
 public class GridImageFragment extends Fragment {
 
@@ -49,6 +55,9 @@ public class GridImageFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.layout_relative)
     RelativeLayout layout;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.layout)
+    FrameLayout layout_pro;
 
     public GridImageFragment() {
         refDb = FirebaseDatabase.getInstance().getReference();
@@ -62,6 +71,16 @@ public class GridImageFragment extends Fragment {
         if (view == null) {
             view = inflater.inflate(R.layout.grid_image_fragment, container, false);
             ButterKnife.bind(this, view);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (checkNetWork()) {
+                        layout_pro.setVisibility(View.GONE);
+                    } else {
+                        new Handler().postDelayed(this, TIME_SLASH);
+                    }
+                }
+            }, TIME_SLASH);
             if (adapter == null) {
                 adapter = new GridImageAdapter(data);
                 Init();
@@ -134,5 +153,13 @@ public class GridImageFragment extends Fragment {
         super.onDestroy();
         refDb.child(IMAGE).child(fUser.getEmail().hashCode() + "").removeEventListener(imageListener);
         refDb.onDisconnect();
+    }
+
+    public boolean checkNetWork() {
+        ConnectivityManager manager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager.getAllNetworkInfo() == null) {
+            return false;
+        }
+        return manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
     }
 }

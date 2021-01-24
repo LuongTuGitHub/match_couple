@@ -3,7 +3,9 @@ package com.java.tu.app.message.fragment.profile;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -93,8 +95,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         refDb.child(PROFILE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addValueEventListener(userListener);
         bt_edit_profile.setOnClickListener(ProfileFragment.this);
         bt_log_out.setOnClickListener(ProfileFragment.this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Account();
+            }
+        });
         if (adapter == null) {
-            adapter = new ProfileViewPagerAdapter(requireActivity().getSupportFragmentManager(), FragmentPagerAdapter.POSITION_NONE);
+            adapter = new ProfileViewPagerAdapter(requireActivity().getSupportFragmentManager(), FragmentPagerAdapter.POSITION_UNCHANGED);
             vp_view.setAdapter(adapter);
         }
         tb_view.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -229,11 +237,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         refDb.onDisconnect();
     }
 
-    public boolean checkNetWork() {
-        ConnectivityManager manager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager.getAllNetworkInfo() == null) {
-            return false;
-        }
-        return manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+    private void Account() {
+        @SuppressLint("InflateParams") View bottom_view = LayoutInflater.from(requireContext()).inflate(R.layout.bottom_account_view, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(bottom_view);
+        ((TextView) bottom_view.findViewById(R.id.tv_email)).setText(fUser.getEmail());
+        refDb.child(PROFILE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() != null) {
+                    Profile profile = snapshot.getValue(Profile.class);
+                    if (profile != null) {
+                        if (profile.getName() != null) {
+                            if (profile.getName().length() > 0) {
+                                ((TextView) bottom_view.findViewById(R.id.tv_name)).setText(profile.getName());
+                            }
+                        }
+                        if (profile.getAvatar() != null) {
+                            if (profile.getAvatar().length() > 0) {
+                                new Image(requireContext()).getImage(bottom_view.findViewById(R.id.iv_avatar), profile.getAvatar(), Long.MAX_VALUE);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        dialog.show();
     }
 }
