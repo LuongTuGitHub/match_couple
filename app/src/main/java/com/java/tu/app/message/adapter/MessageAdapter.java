@@ -2,6 +2,7 @@ package com.java.tu.app.message.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import com.java.tu.app.message.object.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
@@ -32,18 +35,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
     @NonNull
     @Override
     public MessageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (type == Const.Conversation.NORMAl) {
-            return new MessageHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.message_text_right, parent, false));
-        }
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_text_right, parent, false);
+        return new MessageHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
-        Message message = messages.get(position);
-        if (type == Const.Conversation.NORMAl) {
-            ((TextView) holder.itemView.findViewById(R.id.tv_body)).setText(message.getBody());
-        }
+        ((TextView) holder.itemView.findViewById(R.id.tv_body)).setText(messages.get(position).getBody());
     }
 
     @Override

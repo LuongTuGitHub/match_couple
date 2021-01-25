@@ -320,7 +320,7 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="wrap_content"
-                    android:icon="@drawable/ic_baseline_perm_contact_calendar_24" />
+                    android:icon="@drawable/ic_outline_assignment_ind_24" />
             </com.google.android.material.tabs.TabLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

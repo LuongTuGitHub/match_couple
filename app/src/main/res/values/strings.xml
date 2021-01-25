@@ -39,6 +39,7 @@
     <string name="following">Following</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="log_out">Log Out</string>
+    <string name="you">You</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="change_profile_photo">Change Profile Photo</string>
@@ -58,4 +59,6 @@
     <string name="apply_avatar">Apply Avatar</string>
     <string name="delete_image">Delete Image</string>
     <string name="save_image">Save Image</string>
+    <string name="message_delete">Message Delete</string>
+    <string name="message_hidden">Message Hidden</string>
 </resources>

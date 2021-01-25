@@ -8,5 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MessageHolder extends RecyclerView.ViewHolder {
     public MessageHolder(@NonNull View itemView) {
         super(itemView);
+        setIsRecyclable(false);
     }
 }

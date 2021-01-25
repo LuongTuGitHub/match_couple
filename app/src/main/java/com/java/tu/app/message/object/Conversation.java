@@ -6,17 +6,26 @@ public class Conversation {
     private ArrayList<String> persons;
     private String user_create;
     private int type;
-    private Message message;
+    private String message;
     private String name;
+    private String image;
 
     public Conversation() {
     }
 
-    public Conversation(ArrayList<String> persons, String user_create, int type, Message message) {
+    public Conversation(ArrayList<String> persons, String user_create, int type, String message) {
         this.persons = persons;
         this.user_create = user_create;
         this.type = type;
         this.message = message;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {
@@ -51,11 +60,11 @@ public class Conversation {
         this.type = type;
     }
 
-    public Message getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Message message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 }

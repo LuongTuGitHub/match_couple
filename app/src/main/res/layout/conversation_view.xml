@@ -57,7 +57,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="100dp"
-            android:gravity="center_vertical"
+            android:gravity="bottom"
             android:padding="10dp"
             android:text="@string/name"
             android:textColor="@color/black" />
@@ -71,7 +71,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="100dp"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:padding="10dp"
             android:text="@string/please_send_first_message"
             android:textColor="@color/gray"

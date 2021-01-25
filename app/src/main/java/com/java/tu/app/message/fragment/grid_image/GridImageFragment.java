@@ -85,20 +85,6 @@ public class GridImageFragment extends Fragment {
                     }
                 }
             }, TIME_SLASH);
-            if (adapter == null) {
-                adapter = new GridImageAdapter(data, requireContext());
-                Init();
-                rv_image.setLayoutManager(new GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false));
-                rv_image.setHasFixedSize(true);
-                rv_image.setAdapter(adapter);
-                refDb.child(IMAGE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addChildEventListener(imageListener);
-            }
-            rv_image.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                }
-            });
         }
         return view;
     }
@@ -107,6 +93,20 @@ public class GridImageFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(GridImageViewModel.class);
+        if (adapter == null) {
+            adapter = new GridImageAdapter(data, requireContext());
+            Init();
+            rv_image.setLayoutManager(new GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false));
+            rv_image.setHasFixedSize(true);
+            rv_image.setAdapter(adapter);
+            refDb.child(IMAGE).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addChildEventListener(imageListener);
+        }
+        rv_image.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+            }
+        });
     }
 
     private void Init() {

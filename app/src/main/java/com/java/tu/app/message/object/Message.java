@@ -1,5 +1,7 @@
 package com.java.tu.app.message.object;
 
+import java.util.ArrayList;
+
 public class Message {
     private int minute, hour, day, month, year;
     private String form;
