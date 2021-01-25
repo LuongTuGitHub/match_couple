@@ -19,6 +19,7 @@ public class Const {
     public final static int PICK_IMAGE = 100;
     public final static String MESSAGE = "message";
     public final static String SEEN = "seen";
+    public final static String REACT = "react";
 
     public static class Message {
         public final static int TEXT = 0;

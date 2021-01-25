@@ -313,7 +313,7 @@ public class ConversationActivity extends AppCompatActivity {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         refDb = FirebaseDatabase.getInstance().getReference();
         messages = new ArrayList<>();
-        messageAdapter = new MessageAdapter(ConversationActivity.this, 0, messages);
+        messageAdapter = new MessageAdapter(ConversationActivity.this, 0, messages,key);
     }
 
     private void add(@NotNull String body, int type_message) {

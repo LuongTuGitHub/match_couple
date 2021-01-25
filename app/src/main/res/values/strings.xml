@@ -61,4 +61,5 @@
     <string name="save_image">Save Image</string>
     <string name="message_delete">Message Delete</string>
     <string name="message_hidden">Message Hidden</string>
+    <string name="favorite">favorite</string>
 </resources>

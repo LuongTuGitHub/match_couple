@@ -102,6 +102,49 @@ public class ChatFragment extends Fragment implements OnClickItemRecyclerView, C
                     }
                 }
             });
+            refDb.child(CHAT).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (snapshot.getValue() != null) {
+                        String key = snapshot.getValue(String.class);
+                        if (key != null) {
+                            conversationLive.add(key, "0");
+                            conversationAdapter.notifyItemInserted(conversationLive.size() - 1);
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null) {
+                        String key = snapshot.getValue(String.class);
+                        if (key != null) {
+                            for (int i = 0; i < conversationLive.size(); i++) {
+                                if (conversationLive.getKey().get(i).equals(key)) {
+                                    conversationLive.remove(key);
+                                    conversationAdapter.notifyItemRemoved(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
         return view;
     }
@@ -143,49 +186,6 @@ public class ChatFragment extends Fragment implements OnClickItemRecyclerView, C
                 } else {
                     iv_avatar.setImageDrawable(requireContext().getResources().getDrawable(R.color.white));
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        refDb.child(CHAT).child(fUser.getEmail().hashCode() + "").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot.getValue() != null) {
-                    String key = snapshot.getValue(String.class);
-                    if (key != null) {
-                        conversationLive.add(key, "0");
-                        conversationAdapter.notifyItemInserted(conversationLive.size() - 1);
-                    }
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() != null) {
-                    String key = snapshot.getValue(String.class);
-                    if (key != null) {
-                        for (int i = 0; i < conversationLive.size(); i++) {
-                            if (conversationLive.getKey().get(i).equals(key)) {
-                                conversationLive.remove(key);
-                                conversationAdapter.notifyItemRemoved(i);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
