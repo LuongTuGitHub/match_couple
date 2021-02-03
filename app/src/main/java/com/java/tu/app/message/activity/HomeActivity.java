@@ -124,7 +124,8 @@ public class HomeActivity extends AppCompatActivity {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "???", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, CreatePostActivity.class);
+                startActivity(intent);
             }
         });
         refDb.child(STATUS).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").setValue(ONLINE);

@@ -3,9 +3,7 @@ package com.java.tu.app.message.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
 import com.java.tu.app.message.activity.ConversationActivity;
-import com.java.tu.app.message.adapter.event.OnClickItemRecyclerView;
-import com.java.tu.app.message.adapter.holder.ConversationHolder;
 import com.java.tu.app.message.asset.Const;
 import com.java.tu.app.message.asset.Image;
 import com.java.tu.app.message.event.ChangeData;
@@ -38,21 +32,17 @@ import com.java.tu.app.message.object.Profile;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 
 import static com.java.tu.app.message.asset.Const.AVATAR;
-import static com.java.tu.app.message.asset.Const.CHAT;
 import static com.java.tu.app.message.asset.Const.CONVERSATION;
 import static com.java.tu.app.message.asset.Const.MESSAGE;
 import static com.java.tu.app.message.asset.Const.ONLINE;
 import static com.java.tu.app.message.asset.Const.PROFILE;
 import static com.java.tu.app.message.asset.Const.SEEN;
 import static com.java.tu.app.message.asset.Const.STATUS;
-import static com.java.tu.app.message.asset.Const.TYPE;
 
-public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder> {
+public class ConversationAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final ConversationLive conversationLive;
     private final ChangeData changeData;
@@ -70,13 +60,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationHolder
 
     @NonNull
     @Override
-    public ConversationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.conversation_view, parent, false);
-        return new ConversationHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ConversationHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         refDb.child(CONVERSATION).child(conversationLive.getKey().get(position)).addValueEventListener(new ValueEventListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".fragment.grid_image.GridImageFragment">
+    tools:context=".fragment.GridImageFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

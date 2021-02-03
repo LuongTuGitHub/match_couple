@@ -5,10 +5,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.java.tu.app.message.adapter.holder.FindHolder;
-
-public class FindAdapter extends RecyclerView.Adapter<FindHolder> {
-
+public class FindAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
     public FindAdapter() {
@@ -16,12 +13,12 @@ public class FindAdapter extends RecyclerView.Adapter<FindHolder> {
 
     @NonNull
     @Override
-    public FindHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FindHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
     }
 

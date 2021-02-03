@@ -1,2 +1,6 @@
+include ':app:restful_api'
+include ':app:network'
+include ':app:filter_image'
+include ':app:image_crop'
 include ':app'
 rootProject.name = "Message"

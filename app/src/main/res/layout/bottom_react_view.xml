@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/layout_1"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        tools:ignore="UselessParent">
+
+        <Button
+            android:id="@+id/bt_react"
+            android:layout_width="@dimen/weight_button_react_post"
+            android:layout_height="@dimen/weight_button_react_post"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_outline_favorite_border_24"
+            android:outlineProvider="none" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_2"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_toEndOf="@+id/layout_1"
+        tools:ignore="UselessParent">
+
+        <Button
+            android:id="@+id/bt_comment"
+            android:layout_width="@dimen/weight_button_react_post"
+            android:layout_height="@dimen/weight_button_react_post"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_outline_mode_comment_24"
+            android:outlineProvider="none" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_3"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_toEndOf="@+id/layout_2"
+        tools:ignore="UselessParent">
+
+        <Button
+            android:id="@+id/bt_share"
+            android:layout_width="@dimen/weight_button_react_post"
+            android:layout_height="@dimen/weight_button_react_post"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_baseline_share_24"
+            android:outlineProvider="none" />
+    </FrameLayout>
+</RelativeLayout>

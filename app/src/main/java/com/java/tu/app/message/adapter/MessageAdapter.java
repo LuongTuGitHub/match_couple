@@ -18,22 +18,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
-import com.java.tu.app.message.adapter.holder.MessageHolder;
-import com.java.tu.app.message.asset.Const;
 import com.java.tu.app.message.object.Message;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Vector;
 
+import static com.java.tu.app.message.asset.Const.CONVERSATION;
 import static com.java.tu.app.message.asset.Const.REACT;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final Context context;
     private final int type;
@@ -53,13 +47,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
     @NonNull
     @Override
-    public MessageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_text_right, parent, false);
-        return new MessageHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ArrayList<String> reacts = new ArrayList<>();
         ((TextView) holder.itemView.findViewById(R.id.tv_body)).setText(messages.get(position).getBody());
 
@@ -71,17 +65,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
                 for (int i = 0; i < reacts.size(); i++) {
                     if (reacts.get(i).equals(fUser.getEmail())) {
                         toggle = true;
-                        refDb.child(REACT).child(conversation).child(messages.get(position).getKey()).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").removeValue();
+                        refDb.child(REACT).child(CONVERSATION).child(conversation).child(messages.get(position).getKey()).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").removeValue();
                         break;
                     }
                 }
                 if (!toggle) {
-                    refDb.child(REACT).child(conversation).child(messages.get(position).getKey()).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").setValue(fUser.getEmail());
+                    refDb.child(REACT).child(CONVERSATION).child(conversation).child(messages.get(position).getKey()).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").setValue(fUser.getEmail());
                 }
 
             }
         });
-        refDb.child(REACT).child(conversation).child(messages.get(position).getKey()).addChildEventListener(new ChildEventListener() {
+        refDb.child(REACT).child(CONVERSATION).child(conversation).child(messages.get(position).getKey()).addChildEventListener(new ChildEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

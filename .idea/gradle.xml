@@ -12,6 +12,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app/filter_image" />
+            <option value="$PROJECT_DIR$/app/image_crop" />
+            <option value="$PROJECT_DIR$/app/network" />
+            <option value="$PROJECT_DIR$/app/restful_api" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

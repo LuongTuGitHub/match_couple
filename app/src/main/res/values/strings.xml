@@ -62,4 +62,7 @@
     <string name="message_delete">Message Delete</string>
     <string name="message_hidden">Message Hidden</string>
     <string name="favorite">favorite</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="text">Text</string>
 </resources>

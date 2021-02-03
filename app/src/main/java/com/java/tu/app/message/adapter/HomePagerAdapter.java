@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.java.tu.app.message.fragment.chat.ChatFragment;
-import com.java.tu.app.message.fragment.home.HomeFragment;
-import com.java.tu.app.message.fragment.profile.ProfileFragment;
-import com.java.tu.app.message.fragment.setting.SettingFragment;
+import com.java.tu.app.message.fragment.ChatFragment;
+import com.java.tu.app.message.fragment.HomeFragment;
+import com.java.tu.app.message.fragment.ProfileFragment;
+import com.java.tu.app.message.fragment.SettingFragment;
 
 import java.util.ArrayList;
 

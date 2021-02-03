@@ -17,6 +17,7 @@ public class Const {
     public final static String CHAT = "chat";
     public final static String AVATAR = "avatar";
     public final static int PICK_IMAGE = 100;
+    public final static String POST = "post";
     public final static String MESSAGE = "message";
     public final static String SEEN = "seen";
     public final static String REACT = "react";

@@ -19,8 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.java.tu.app.message.R;
 import com.java.tu.app.message.activity.ConversationActivity;
-import com.java.tu.app.message.adapter.holder.PersonHolder;
-import com.java.tu.app.message.asset.Const;
 import com.java.tu.app.message.asset.Image;
 import com.java.tu.app.message.asset.Key;
 import com.java.tu.app.message.object.Profile;
@@ -34,7 +32,7 @@ import static com.java.tu.app.message.asset.Const.ONLINE;
 import static com.java.tu.app.message.asset.Const.PROFILE;
 import static com.java.tu.app.message.asset.Const.STATUS;
 
-public class PersonAdapter extends RecyclerView.Adapter<PersonHolder> {
+public class PersonAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final Context context;
     private final DatabaseReference refDb;
@@ -50,21 +48,13 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonHolder> {
 
     @NonNull
     @Override
-    public PersonHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.person_view_top, parent, false);
-        return new PersonHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PersonHolder holder, int position) {
-        Intent intent = new Intent(context, ConversationActivity.class);
-        intent.putExtra("key", new Key().getKey(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()), emails.get(position)));
-        if (position == 0) {
-            intent.putExtra("type", Const.Conversation.NORMAl);
-        } else {
-            intent.putExtra("type", Const.Conversation.COUPLE);
-            intent.putExtra("email", emails.get(position));
-        }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         refDb.child(STATUS).child(emails.get(position).hashCode() + "").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,9 +103,11 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonHolder> {
 
             }
         });
-        holder.itemView.findViewById(R.id.iv_avatar).setOnClickListener(new View.OnClickListener() {
+        holder.itemView.findViewById(R.id.layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, ConversationActivity.class);
+                intent.putExtra("key", new Key().getKey(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()), emails.get(position)));
                 context.startActivity(intent);
             }
         });

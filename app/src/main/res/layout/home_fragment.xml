@@ -33,12 +33,6 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_news"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

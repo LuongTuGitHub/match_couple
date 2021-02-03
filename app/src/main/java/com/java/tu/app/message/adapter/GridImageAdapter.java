@@ -11,15 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.tu.app.message.R;
 import com.java.tu.app.message.activity.ViewImageActivity;
-import com.java.tu.app.message.adapter.holder.GridImageHolder;
 import com.java.tu.app.message.asset.Image;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
-public class GridImageAdapter extends RecyclerView.Adapter<GridImageHolder> {
+public class GridImageAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final Vector<String> data;
     private final Context context;
@@ -31,13 +29,13 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageHolder> {
 
     @NonNull
     @Override
-    public GridImageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_view, parent, false);
-        return new GridImageHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GridImageHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String key = data.get(position);
         new Image(holder.itemView.getContext()).getImage(holder.itemView.findViewById(R.id.iv_image), key, Long.MAX_VALUE);
         holder.itemView.findViewById(R.id.layout).setOnClickListener(new View.OnClickListener() {

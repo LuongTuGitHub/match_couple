@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".activity.ViewImageActivity"></activity>
+        <activity android:name=".activity.CreatePostActivity"></activity>
+        <activity android:name=".activity.ViewImageActivity" />
         <activity
             android:name=".activity.ConversationActivity"
             android:launchMode="singleTask"

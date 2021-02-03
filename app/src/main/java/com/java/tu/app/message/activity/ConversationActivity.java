@@ -33,6 +33,7 @@ import com.java.tu.app.message.object.Message;
 import com.java.tu.app.message.object.Profile;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,32 +78,41 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().setStatusBarColor(getColor(R.color.white));
+
         setContentView(R.layout.activity_conversation);
         key = getIntent().getStringExtra("key");
+
+
         ButterKnife.bind(this);
+
         Init();
-        LinearLayoutManager manager = new LinearLayoutManager(ConversationActivity.this, RecyclerView.VERTICAL, false);
-        manager.setStackFromEnd(true);
-        rv_message.setLayoutManager(manager);
-        rv_message.setAdapter(messageAdapter);
         bt_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String body = edt_message.getText().toString().trim();
                 if (body.length() > 0) {
                     add(body, Const.Message.TEXT);
                     edt_message.setText("");
                 }
+
             }
         });
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
+
             }
         });
+
         refDb.child(STATUS).child(Objects.requireNonNull(fUser.getEmail()).hashCode() + "").setValue(ONLINE);
+
         refDb.child(CONVERSATION).child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -215,6 +225,16 @@ public class ConversationActivity extends AppCompatActivity {
                                 }
                             }
                         }
+
+                        // TODO
+                        if (messageAdapter == null) {
+                            messageAdapter = new MessageAdapter(ConversationActivity.this, conversation.getType(), messages, key);
+                            LinearLayoutManager manager = new LinearLayoutManager(ConversationActivity.this, RecyclerView.VERTICAL, false);
+                            manager.setStackFromEnd(true);
+                            rv_message.setLayoutManager(manager);
+                            rv_message.setAdapter(messageAdapter);
+                            rv_message.setItemViewCacheSize(9);
+                        }
                     }
                 }
             }
@@ -234,16 +254,18 @@ public class ConversationActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 messages.add(message);
-                                messageAdapter.notifyItemChanged(messages.size() - 1);
-                                rv_message.scrollToPosition(messages.size() - 1);
-                                for (int i = 0; i < messages.size() - 1; i++) {
-                                    for (int j = i + 1; j < messages.size(); j++) {
-                                        if (messages.get(i).getKey().compareTo(messages.get(j).getKey()) > 0) {
-                                            Message m = messages.get(i);
-                                            messages.set(i, messages.get(j));
-                                            messages.set(j, m);
-                                            messageAdapter.notifyItemChanged(i);
-                                            messageAdapter.notifyItemChanged(j);
+                                if (messageAdapter != null) {
+                                    messageAdapter.notifyItemChanged(messages.size() - 1);
+                                    rv_message.scrollToPosition(messages.size() - 1);
+                                    for (int i = 0; i < messages.size() - 1; i++) {
+                                        for (int j = i + 1; j < messages.size(); j++) {
+                                            if (messages.get(i).getKey().compareTo(messages.get(j).getKey()) > 0) {
+                                                Message m = messages.get(i);
+                                                messages.set(i, messages.get(j));
+                                                messages.set(j, m);
+                                                messageAdapter.notifyItemChanged(i);
+                                                messageAdapter.notifyItemChanged(j);
+                                            }
                                         }
                                     }
                                 }
@@ -313,7 +335,6 @@ public class ConversationActivity extends AppCompatActivity {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         refDb = FirebaseDatabase.getInstance().getReference();
         messages = new ArrayList<>();
-        messageAdapter = new MessageAdapter(ConversationActivity.this, 0, messages,key);
     }
 
     private void add(@NotNull String body, int type_message) {

@@ -4,14 +4,11 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.java.tu.app.message.fragment.grid_image.GridImageFragment;
-import com.java.tu.app.message.fragment.post.PostFragment;
+import com.java.tu.app.message.fragment.GridImageFragment;
+import com.java.tu.app.message.fragment.PostFragment;
 
 import org.jetbrains.annotations.NotNull;
 
