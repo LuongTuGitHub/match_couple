@@ -25,15 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ViewImageActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activity.ConversationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
