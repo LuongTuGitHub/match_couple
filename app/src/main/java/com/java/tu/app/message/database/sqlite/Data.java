@@ -1,4 +1,4 @@
-package com.java.tu.app.message.database.nosql;
+package com.java.tu.app.message.database.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class Data extends SQLiteOpenHelper {
 
-    private final static String _NAME = "no_sql.db";
+    private final static String _NAME = "database_sql.db";
     private final static int _VERSION = 1;
 
     public Data(@Nullable Context context) {

@@ -16,25 +16,22 @@ import java.util.ArrayList;
 
 public class ProfileViewPagerAdapter extends FragmentPagerAdapter {
 
-    private final ArrayList<Fragment> fragments;
 
 
     public ProfileViewPagerAdapter(@NonNull FragmentManager fm, int behavior, @NotNull Context context) {
         super(fm, behavior);
-        fragments = new ArrayList<>();
-        fragments.add(new GridImageFragment());
-        fragments.add(new PostFragment());
+
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return null;
     }
 
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return 0;
     }
 }

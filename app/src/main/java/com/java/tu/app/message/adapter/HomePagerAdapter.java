@@ -14,27 +14,22 @@ import java.util.ArrayList;
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
-    private final ArrayList<Fragment> fragments;
 
 
     public HomePagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
-        fragments = new ArrayList<>();
-        fragments.add(new HomeFragment());
-        fragments.add(new ChatFragment());
-        fragments.add(new ProfileFragment());
-        fragments.add(new SettingFragment());
+
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return null;
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return 0;
     }
 
 
