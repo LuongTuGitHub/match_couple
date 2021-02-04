@@ -1,4 +1,4 @@
-package com.android.database.local.no_sql;
+package com.android.database.local.no_sql.annotation;
 
 
 import java.lang.annotation.Documented;

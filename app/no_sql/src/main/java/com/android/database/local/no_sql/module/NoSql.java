@@ -3,7 +3,7 @@ package com.android.database.local.no_sql.module;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.android.database.local.no_sql.NotNull;
+import com.android.database.local.no_sql.annotation.NotNull;
 import com.android.database.local.no_sql.exception.NullTarget;
 
 public class NoSql {
