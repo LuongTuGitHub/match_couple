@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app/filter_image" />
             <option value="$PROJECT_DIR$/app/image_crop" />
             <option value="$PROJECT_DIR$/app/network" />
+            <option value="$PROJECT_DIR$/app/no_sql" />
             <option value="$PROJECT_DIR$/app/restful_api" />
           </set>
         </option>

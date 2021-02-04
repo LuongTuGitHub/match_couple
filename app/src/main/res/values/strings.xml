@@ -45,7 +45,7 @@
     <string name="change_profile_photo">Change Profile Photo</string>
     <string name="name">Name</string>
     <string name="image">Image</string>
-    <string name="when_you_share_photos_and_videos_they_ll_appear_on_your_profile">When you share photos and videos they`ll appear on your profile</string>
+    <string name="when_you_share_photos_and_videos_they_ll_appear_on_your_profile" translatable="true">When you share photos and videos they`ll appear on your profile</string>
     <string name="share_your_first_photo_or_video">Share your first photo or video</string>
     <string name="when_people_tag_you_in_photos_and_video_they_ll_appear_here">When people tag you in photos and video, they`ll appear here</string>
     <string name="photos_and_video_of_you">Photos and Video of You</string>

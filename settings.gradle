@@ -1,3 +1,4 @@
+include ':app:no_sql'
 include ':app:restful_api'
 include ':app:network'
 include ':app:filter_image'
