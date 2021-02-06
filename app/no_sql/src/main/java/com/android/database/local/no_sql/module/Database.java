@@ -6,13 +6,14 @@ import com.android.database.local.no_sql.exception.NullTarget;
 
 public class Database {
 
-    private String _root = "database:/";
+    public static final String _root = "database";
+    private String path = "";
 
-    public Database getReference() {
+    public static Database getReference() {
         return new Database();
     }
 
-    public Database getReference(@NotNull String path) {
+    public static Database getReference(@NotNull String path) {
         return new Database().child(path);
     }
 
@@ -24,7 +25,11 @@ public class Database {
 
     public Database child(@NotNull String target) {
         if (target != null) {
-            this._root += ("/" + target);
+            if (this.path.length() == 0) {
+                this.path += target;
+            } else {
+                this.path += ("/" + target);
+            }
         } else {
             throw new NullTarget("target null");
         }
@@ -33,6 +38,8 @@ public class Database {
 
 
     public String getPath() {
-        return this._root;
+        return this.path;
     }
+
+
 }
