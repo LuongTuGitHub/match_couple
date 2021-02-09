@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.java.tu.app.message.R;
 
 public class CreatePostActivity extends AppCompatActivity {
@@ -15,7 +16,7 @@ public class CreatePostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
-
+        FirebaseDatabase.getInstance().getReference().child("");
     }
 
 
